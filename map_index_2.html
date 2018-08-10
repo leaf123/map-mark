@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>动画标记</title>
+</head>
+<style type="text/css">
+    #container {
+        width:80%;
+        height:400px; 
+        margin:0 auto;
+    }  
+     .css_animation{    
+        height:50px;    
+        width:50px;    
+        border-radius: 25px;    
+        background: rgba(250, 0, 0, 0.9);    
+        transform: scale(0);    
+        animation: myfirst 3s;    
+        animation-iteration-count: infinite;    
+    }    
+    .amap-marker .marker-route {
+            position: absolute;
+            width: 40px;
+            height: 44px;
+            color: red;
+            z-index: 9999;
+            background: url(https://webapi.amap.com/theme/v1.3/markers/n/mark_r.png) no-repeat;
+            cursor: pointer;
+        }
+        .amap-marker .marker-marker-bus-from {
+            background-position: 18px 0px
+        }
+    @keyframes myfirst{    
+        to{    
+            transform: scale(2);    
+            background: rgba(0, 0, 0, 0);    
+        }    
+    }    
+</style>
+<body>
+  <div id="container"></div> 
+</body>
+</html>
+<script type="text/javascript">
+//异步加载 JS API
+    window.onLoad  = function(){
+        //创建一个地图
+        var map = new AMap.Map('container', {
+        center: [117.134498, 31.830703],
+        zooms: [4,18],//设置地图级别范围
+        zoom: 13,
+        viewMode:'3D',//使用3D视图
+        pitch:75 // 地图俯仰角度，有效范围 0 度- 83 度
+    });
+        map.setMapStyle('amap://styles/dark');//地图的底层样式
+
+
+    // 将 Icon 实例添加到 marker 上:
+    var marker = new AMap.Marker({
+        map: map,
+        position: [117.134498, 31.830703], //基点位置
+        offset: new AMap.Pixel(-10, -10), //相对于基点的偏移位置
+        draggable: true,  //是否可拖动
+        content: '<div id="c_test" class="css_animation"> </div>  '  
+    });
+    map.add(marker);
+   
+  }
+  var url = 'https://webapi.amap.com/maps?v=1.4.8&key=b381934e8ff8e0a714c5da8bcc35560f&callback=onLoad';
+  var jsapi = document.createElement('script');
+  jsapi.charset = 'utf-8';
+  jsapi.src = url;
+  document.head.appendChild(jsapi);
+</script>

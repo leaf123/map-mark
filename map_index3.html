@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>动画标记</title>
+</head>
+<style type="text/css">
+    #container {
+        width:80%;
+        height:400px; 
+        margin:0 auto;
+    }  
+     .css_animation{    
+        height:50px;    
+        width:50px;    
+        border-radius: 25px;    
+        background: rgba(250, 0, 0, 0.9);    
+        transform: scale(0);    
+        animation: myfirst 3s;    
+        animation-iteration-count: infinite;    
+    }    
+    
+    @keyframes myfirst{    
+        to{    
+            transform: scale(2);    
+            background: rgba(0, 0, 0, 0);    
+        }    
+    }    
+    /* 
+     */
+     @keyframes circleAnimationIn {
+  0% {
+    transform: scale(0.3);
+    -webkit-transform: scale(0.3);
+    opacity: 0.0;
+  }
+  25% {
+    transform: scale(0.3);
+    -webkit-transform: scale(0.3);
+    opacity: 0.1;
+  }
+  50% {
+    transform: scale(0.5);
+    -webkit-transform: scale(0.5);
+    opacity: 0.3;
+  }
+  75% {
+    transform: scale(0.8);
+    -webkit-transform: scale(0.8);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+    -webkit-transform: scale(1);
+    opacity: 0.0;
+  }
+}
+@keyframes circleAnimationOut {
+  0% {
+    transform: scale(0.3);
+    -webkit-transform: scale(0.3);
+    opacity: 0.0;
+  }
+  25% {
+    transform: scale(0.3);
+    -webkit-transform: scale(0.3);
+    opacity: 0.1;
+  }
+  50% {
+    transform: scale(0.3);
+    -webkit-transform: scale(0.3);
+    opacity: 0.3;
+  }
+  75% {
+    transform: scale(0.5);
+    -webkit-transform: scale(0.5);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(0.8);
+    -webkit-transform: scale(0.8);
+    opacity: 0.0;
+  }
+}
+div[parent="box"] {
+  position: relative;
+  margin: 50px auto;
+  width: 54px;
+  height: 54px;
+}
+
+/* 保持大小不变的小圆点 */
+.dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  margin-left: -9px;
+  margin-top: -9px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  background-color: #fb7070; /* 实心圆 ，如果没有这个就是一个小圆圈 */
+  z-index: 2;
+}
+
+/* 产生动画（向外扩散变大）的圆圈 第一个圆 */
+.inner-circle {
+  position: absolute;
+  z-index: 1;
+  width: 54px;
+  height: 54px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  border: 1px solid #fb7070;
+  -webkit-animation: circleAnimationIn 2s ease-out;
+  -moz-animation: circleAnimationIn 2s ease-out;
+  animation: circleAnimationIn 2s ease-out;
+  -webkit-animation-iteration-count: infinite;
+  -moz-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  box-shadow: 1px 1px 30px #fb7070;
+}
+
+/* 产生动画（向外扩散变大）的圆圈 第二个圆 */
+.outer-circle {
+  position: absolute;
+  z-index: 1;
+  width: 54px;
+  height: 54px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  border: 1px solid #fb7070;
+  -webkit-animation: circleAnimationOut 2s ease-out;
+  -moz-animation: circleAnimationOut 2s ease-out;
+  animation: circleAnimationOut 2s ease-out;
+  -webkit-animation-iteration-count: infinite;
+  -moz-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  box-shadow: 1px 1px 30px #fb7070;
+}
+
+</style>
+<body>
+  <div id="container"></div> 
+</body>
+</html>
+<script type="text/javascript">
+//异步加载 JS API
+    window.onLoad  = function(){
+        //创建一个地图
+        var map = new AMap.Map('container', {
+        center: [117.134498, 31.830703],
+        zooms: [4,18],//设置地图级别范围
+        zoom: 13,
+        viewMode:'3D',//使用3D视图
+        pitch:75 // 地图俯仰角度，有效范围 0 度- 83 度
+    });
+        map.setMapStyle('amap://styles/whitesmoke');//地图的底层样式
+
+
+    // 将 Icon 实例添加到 marker 上:
+    var marker = new AMap.Marker({
+        map: map,
+        position: [117.134498, 31.830703], //基点位置
+        offset: new AMap.Pixel(-10, -10), //相对于基点的偏移位置
+        draggable: true,  //是否可拖动
+        content: '<div parent="box"><div class="dot"></div><div class="inner-circle"></div><div class="outer-circle"></div></div >'  
+    });
+    map.add(marker);
+   
+  }
+  var url = 'https://webapi.amap.com/maps?v=1.4.8&key=b381934e8ff8e0a714c5da8bcc35560f&callback=onLoad';
+  var jsapi = document.createElement('script');
+  jsapi.charset = 'utf-8';
+  jsapi.src = url;
+  document.head.appendChild(jsapi);
+</script>
